@@ -1,0 +1,15 @@
+$root: '.Button';
+
+#{$root} {
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}

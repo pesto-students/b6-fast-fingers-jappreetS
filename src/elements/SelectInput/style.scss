@@ -1,0 +1,22 @@
+$root: '.SelectInput';
+
+#{$root} {
+  height: 50px;
+  padding: 0 24px;
+  border: 1px solid #97A4A7;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 18px;
+  color: #97A4A7;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("./../../assets/images/icons/dropdown-arrow.svg");
+  background-repeat: no-repeat;
+  background-position-x: calc(100% - 24px);
+  background-position-y: 20px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}

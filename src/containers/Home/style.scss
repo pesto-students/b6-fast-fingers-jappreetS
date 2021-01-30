@@ -1,0 +1,52 @@
+$root: '.Home';
+
+#{$root} {
+  width: 622px;
+  margin: 0 auto;
+  &-logoSection {
+    padding-top: calc(124/1080 * 100%);
+    margin-bottom: calc(60/1080 * 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .logo {
+      width: 234px;
+      height: calc(156/1080 * 100%);
+      margin-bottom: calc(28/1080 * 100%);
+    }
+    h1 {
+      font-size: 80px;
+      align-self: flex-start;
+    }
+    .tag-line {
+      width: 100%;
+      text-align: center;
+      font-size: 26px;
+      position: relative;
+      &::before, &::after {
+        content: "";
+        width: 125px;
+        height: 2px;
+        background: #FF5155;
+        position: absolute;
+        top: 50%;
+      }
+      &::before {
+        left: 0;
+      }
+      &::after {
+        right: 0;
+      }
+    }
+  }
+  &-inputSection {
+    display: flex;
+    flex-direction: column;
+    .TextInput {
+      margin-bottom: 15px;
+    }
+    .SelectInput {
+      margin-bottom: calc(196/1080 * 100%);
+    }
+  }
+}

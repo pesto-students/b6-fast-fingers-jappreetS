@@ -12,4 +12,8 @@ $root: '.Button';
   &:focus {
     outline: none;
   }
+
+  .show-icon-margin {
+    margin-right: 16px;
+  }
 }

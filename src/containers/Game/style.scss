@@ -1,0 +1,31 @@
+$root: '.Game';
+
+#{$root} {
+  padding: 40px;
+
+  &-top {
+    &__left {
+      .icon-text {
+        .Icon {
+          margin-right: 20px;
+          width: 32px;
+        }
+        span {
+          font-size: 32px;
+        }
+        &:first-child {
+          margin-bottom: 16px;
+        }
+      }
+    }
+    &__right {
+      font-size: 48px;
+    }
+  }
+
+  &-center {
+    &__right {
+      width: 320px;
+    }
+  }
+}

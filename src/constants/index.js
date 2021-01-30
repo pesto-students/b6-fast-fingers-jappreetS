@@ -4,6 +4,12 @@ const DIFFICULTY_LEVEL = [
   { value: 'hard', label: 'HARD' },
 ];
 
+const ROUTES = {
+  HOME: '/',
+  GAME: '/game',
+};
+
 export {
   DIFFICULTY_LEVEL,
+  ROUTES
 };

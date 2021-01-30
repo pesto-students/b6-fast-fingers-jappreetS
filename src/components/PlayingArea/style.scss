@@ -1,0 +1,11 @@
+$root: '.PlayingArea';
+
+#{$root} {
+  .word {
+    font-size: 60px;
+    margin-bottom: 32px;
+  }
+  .TextInput {
+    width: 500px;
+  }
+}

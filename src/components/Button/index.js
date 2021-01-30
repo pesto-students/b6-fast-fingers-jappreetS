@@ -4,10 +4,15 @@ import Icon from './../../elements/Icon';
 
 import './style.scss';
 
-const Button = ({ iconName, iconPath, text, width, onClick = () => { } }) => {
+const Button = ({ iconName, iconPath, showIconMargin, text, width, onClick = () => { } }) => {
   return (
     <button className="Button color-red" type="button" onClick={onClick}>
-      <Icon iconName={iconName} iconPath={iconPath} width={width} />
+      <Icon
+        className={!!showIconMargin ? "show-icon-margin" : ""}
+        iconName={iconName}
+        iconPath={iconPath}
+        width={width}
+      />
       {text}
     </button>
   )

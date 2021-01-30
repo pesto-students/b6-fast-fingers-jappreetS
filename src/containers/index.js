@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import { ROUTES } from './../constants';
+
 import Home from './Home';
 import Game from './Game';
 
@@ -12,8 +14,8 @@ const App = () => {
     <div className="container">
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/game' component={Game} />
+          <Route exact path={ROUTES.HOME} component={Home} />
+          <Route exact path={ROUTES.GAME} component={Game} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-import { ROUTES } from './../../constants';
+import { DIFFICULTY_LEVEL_VALUE, ROUTES } from './../../constants';
+import DictionaryContext from './../../context/DictionaryContext';
+import { generateWord, getItemFromStorage } from './../../utils/helpers';
 
 import Button from './../../components/Button';
 import CurrentGameDetails from './../../components/CurrentGameDetails';
@@ -16,6 +18,16 @@ import userIcon from './../../assets/images/icons/user.svg';
 import './style.scss';
 
 const Game = ({ history }) => {
+  const dictionary = useContext(DictionaryContext);
+  const [difficultyFactor, setDifficultyFactor] = useState(1);
+  const [word, setWord] = useState("");
+  useEffect(() => {
+    const difficultyLevel = getItemFromStorage("difficultyLevel");
+    setDifficultyFactor(DIFFICULTY_LEVEL_VALUE[difficultyLevel]);
+    const currentWord = generateWord(dictionary[difficultyLevel]);
+    setWord(currentWord);
+  }, [dictionary]);
+
   return (
     <div className="Game height-100 d-flex flex-direction-column justify-content-between">
       <section className="Game-top d-flex justify-content-between">
@@ -31,13 +43,18 @@ const Game = ({ history }) => {
         </div>
         <div className="Game-top__right color-red">fast fingers</div>
       </section>
-      <section className="Game-center d-flex justify-content-between justify-content-center">
-        {false && <>
+      <section
+        className={`Game-center d-flex ${true ? "justify-content-between" : "justify-content-center"}`}
+      >
+        {true ? <>
           <ScoreBoard />
-          <PlayingArea />
+          <PlayingArea
+            currentWord={word}
+          />
           <div className="Game-center__right" />
-        </>}
-        <CurrentGameDetails />
+        </> :
+          <CurrentGameDetails />
+        }
       </section>
       <section className="Game-bottom d-flex justify-content-between">
         <Button

@@ -5,11 +5,11 @@ import TextInput from './../../elements/TextInput';
 
 import './style.scss';
 
-const PlayingArea = () => {
+const PlayingArea = ({ currentWord }) => {
   return (
     <div className="PlayingArea d-flex flex-direction-column align-items-center">
       <Counter />
-      <div className="word color-white">WINDOW</div>
+      <div className="word color-white">{currentWord}</div>
       <TextInput />
     </div>
   )

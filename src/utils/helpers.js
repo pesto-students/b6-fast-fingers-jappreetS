@@ -14,7 +14,13 @@ const getItemFromStorage = (key, storageType = 0) => {
   return data;
 };
 
+const generateWord = dictionary => {
+  const randomNumber = Math.floor(Math.random() * dictionary.length);
+  return dictionary[randomNumber];
+};
+
 export {
   setItemInStorage,
   getItemFromStorage,
+  generateWord,
 };

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { ROUTES } from '../../constants';
+import { ROUTES } from './../../constants';
+import { setItemInStorage, getItemFromStorage } from '../../utils/helpers';
 
 import Button from './../../components/Button';
 import TextInput from './../../elements/TextInput';
@@ -16,6 +17,11 @@ const Home = props => {
   const [name, setName] = useState("");
   const [hasError, setHasError] = useState(false);
 
+  useEffect(() => {
+    const name = getItemFromStorage("name");
+    !!name && setName(name);
+  }, []);
+
   const handleNameChange = event => {
     const { value } = event.target;
     if (!hasError && !value) {
@@ -26,7 +32,10 @@ const Home = props => {
 
   const handleStartGameClick = () => {
     validateName();
-    !!name && history.push(ROUTES.GAME);
+    if (!!name) {
+      setItemInStorage("name", name);
+      history.push(ROUTES.GAME);
+    }
   };
 
   const validateName = () => {

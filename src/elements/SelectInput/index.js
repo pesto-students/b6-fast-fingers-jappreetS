@@ -1,13 +1,12 @@
 import React from 'react';
-import { DIFFICULTY_LEVEL } from '../../constants';
 
 import './style.scss';
 
-const SelectInput = () => {
+const SelectInput = ({ data, value, onChange = () => { } }) => {
   return (
-    <select className="SelectInput">
-      {DIFFICULTY_LEVEL.map(level => (
-        <option key={level.value}>{level.label}</option>
+    <select className="SelectInput" value={value} onChange={onChange}>
+      {data.map(item => (
+        <option key={item.value} value={item.value}>{item.label}</option>
       ))}
     </select>
   )

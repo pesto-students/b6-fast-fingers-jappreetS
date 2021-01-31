@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { ROUTES } from './../../constants';
-import { setItemInStorage, getItemFromStorage } from '../../utils/helpers';
+import { DIFFICULTY_LEVEL, ROUTES } from './../../constants';
+import { setItemInStorage, getItemFromStorage } from './../../utils/helpers';
 
 import Button from './../../components/Button';
 import TextInput from './../../elements/TextInput';
@@ -15,14 +15,17 @@ import './style.scss';
 const Home = props => {
   const { history } = props;
   const [name, setName] = useState("");
+  const [difficultyLevel, setDifficultyLevel] = useState(DIFFICULTY_LEVEL[0].value);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const name = getItemFromStorage("name");
+    const difficultyLevel = getItemFromStorage("difficultyLevel");
     !!name && setName(name);
+    !!difficultyLevel && setDifficultyLevel(difficultyLevel);
   }, []);
 
-  const handleNameChange = event => {
+  const handleInputChange = event => {
     const { value } = event.target;
     if (!hasError && !value) {
       setHasError(true)
@@ -30,10 +33,16 @@ const Home = props => {
     setName(value);
   };
 
+  const handleSelectChange = event => {
+    const { value } = event.target;
+    setDifficultyLevel(value);
+  };
+
   const handleStartGameClick = () => {
     validateName();
     if (!!name) {
       setItemInStorage("name", name);
+      setItemInStorage("difficultyLevel", difficultyLevel);
       history.push(ROUTES.GAME);
     }
   };
@@ -57,10 +66,14 @@ const Home = props => {
         <TextInput
           className={!!hasError ? "border-red" : ""}
           value={name}
-          onChange={handleNameChange}
+          onChange={handleInputChange}
         />
         {!!hasError && <div className="color-red error-msg">Please enter your name</div>}
-        <SelectInput />
+        <SelectInput
+          data={DIFFICULTY_LEVEL}
+          value={difficultyLevel}
+          onChange={handleSelectChange}
+        />
         <Button
           className={!!hasError ? "btn-error" : ""}
           iconName="play"

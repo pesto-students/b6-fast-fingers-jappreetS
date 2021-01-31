@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ROUTES } from '../../constants';
 
@@ -13,9 +13,24 @@ import './style.scss';
 
 const Home = props => {
   const { history } = props;
+  const [name, setName] = useState("");
+  const [hasError, setHasError] = useState(false);
+
+  const handleNameChange = event => {
+    const { value } = event.target;
+    if (!hasError && !value) {
+      setHasError(true)
+    } else setHasError(false);
+    setName(value);
+  };
 
   const handleStartGameClick = () => {
-    history.push(ROUTES.GAME);
+    validateName();
+    !!name && history.push(ROUTES.GAME);
+  };
+
+  const validateName = () => {
+    !name && setHasError(true);
   };
 
   return (
@@ -30,9 +45,15 @@ const Home = props => {
         <div className="tag-line"><span className="color-red">the ultimate typing game</span></div>
       </section>
       <section className="Home-inputSection">
-        <TextInput />
+        <TextInput
+          className={!!hasError ? "border-red" : ""}
+          value={name}
+          onChange={handleNameChange}
+        />
+        {!!hasError && <div className="color-red error-msg">Please enter your name</div>}
         <SelectInput />
         <Button
+          className={!!hasError ? "btn-error" : ""}
           iconName="play"
           iconPath={playIcon}
           text="START GAME"

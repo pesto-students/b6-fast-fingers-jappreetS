@@ -2,10 +2,10 @@ import React from 'react';
 
 import './style.scss';
 
-const TextInput = ({ value, onChange = () => { } }) => {
+const TextInput = ({ className, value, onChange = () => { } }) => {
   return (
     <input
-      className="TextInput"
+      className={`TextInput ${!!className ? className : ""}`}
       type="text"
       value={value}
       onChange={onChange}

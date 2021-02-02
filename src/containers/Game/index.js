@@ -21,8 +21,14 @@ const Game = ({ history }) => {
   const dictionary = useContext(DictionaryContext);
   const [difficultyFactor, setDifficultyFactor] = useState(1);
   const [word, setWord] = useState("");
+  const [name, setName] = useState("");
+  const [difficultyLevel, setDifficultyLevel] = useState("");
+
   useEffect(() => {
+    const name = getItemFromStorage("name");
     const difficultyLevel = getItemFromStorage("difficultyLevel");
+    setName(name);
+    setDifficultyLevel(difficultyLevel);
     setDifficultyFactor(DIFFICULTY_LEVEL_VALUE[difficultyLevel]);
     const currentWord = generateWord(dictionary[difficultyLevel]);
     setWord(currentWord);
@@ -34,11 +40,11 @@ const Game = ({ history }) => {
         <div className="Game-top__left">
           <div className="icon-text d-flex align-items-center">
             <Icon iconName="user" iconPath={userIcon} />
-            <span className="color-red">PLAYER_NAME_777</span>
+            <span className="color-red">{name}</span>
           </div>
           <div className="icon-text d-flex align-items-center">
             <Icon iconName="user" iconPath={gamepadIcon} />
-            <span className="color-red">LEVEL: MEDIUM</span>
+            <span className="color-red text-uppercase">LEVEL: {difficultyLevel}</span>
           </div>
         </div>
         <div className="Game-top__right color-red">fast fingers</div>
@@ -49,6 +55,7 @@ const Game = ({ history }) => {
         {true ? <>
           <ScoreBoard />
           <PlayingArea
+            difficultyFactor={difficultyFactor}
             currentWord={word}
           />
           <div className="Game-center__right" />

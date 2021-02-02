@@ -4,6 +4,7 @@ $root: '.Game';
   padding: 40px;
 
   &-top {
+    margin-bottom: 40px;
     &__left {
       .icon-text {
         .Icon {
@@ -24,6 +25,7 @@ $root: '.Game';
   }
 
   &-center {
+    margin-bottom: 40px;
     &__right {
       width: 320px;
     }

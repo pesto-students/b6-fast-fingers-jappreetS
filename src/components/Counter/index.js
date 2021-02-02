@@ -4,7 +4,7 @@ import CountdownCircle from './../../elements/CountdownCircle';
 
 import './style.scss';
 
-const Counter = ({ timeForWord }) => {
+const Counter = ({ timeForWord, word }) => {
   const [timeLeft, setTimeLeft] = useState(timeForWord);
   const timerRef = useRef(null);
 
@@ -21,6 +21,12 @@ const Counter = ({ timeForWord }) => {
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft]);
+
+  useEffect(() => {
+    setTimeLeft(timeForWord);
+    timerRef.current.setAttribute('stroke-dasharray', '283 283');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [word]);
 
   const setCircleDasharray = () => {
     const circleDasharray = `${(calculateTimeFraction() * 283).toFixed(0)} 283`;

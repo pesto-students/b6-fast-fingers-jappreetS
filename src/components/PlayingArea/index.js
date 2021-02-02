@@ -5,14 +5,31 @@ import TextInput from './../../elements/TextInput';
 
 import './style.scss';
 
-const PlayingArea = ({ currentWord, difficultyFactor }) => {
+const PlayingArea = ({ currentWord, difficultyFactor, getNewWord, increaseDifficultyFactor }) => {
   const [userInput, setUserInput] = useState("");
   const [currentWordTime, setCurrentWordTime] = useState(0);
 
   useEffect(() => {
-    setCurrentWordTime(Math.ceil(currentWord.length / difficultyFactor));
+    setCurrentWordTime(Math.max(Math.round(currentWord.length / difficultyFactor), 2));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentWord]);
+
+  useEffect(() => {
+    if (currentWord === userInput) {
+      increaseDifficultyFactor();
+      let currentLevel;
+      if (difficultyFactor >= 1 && difficultyFactor < 1.5) {
+        currentLevel = "easy";
+      } else if (difficultyFactor >= 1.5 && difficultyFactor < 2) {
+        currentLevel = "medium";
+      } else {
+        currentLevel = "hard";
+      }
+      getNewWord(currentLevel);
+      setUserInput("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInput]);
 
   const getCurrentWord = () => {
     const currentWordCharacters = currentWord.toUpperCase().split("");
@@ -41,6 +58,7 @@ const PlayingArea = ({ currentWord, difficultyFactor }) => {
     <div className="PlayingArea d-flex flex-direction-column align-items-center">
       <Counter
         timeForWord={currentWordTime}
+        word={currentWord}
       />
       {getCurrentWord()}
       <TextInput

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { DIFFICULTY_LEVEL_VALUE, ROUTES } from './../../constants';
+import { DIFFICULTY_LEVEL_VALUE, ROUTES, SUCCESS_INCREASE_DIFFICULTY_FACTOR } from './../../constants';
 import DictionaryContext from './../../context/DictionaryContext';
 import { generateWord, getItemFromStorage } from './../../utils/helpers';
 
@@ -19,10 +19,10 @@ import './style.scss';
 
 const Game = ({ history }) => {
   const dictionary = useContext(DictionaryContext);
-  const [difficultyFactor, setDifficultyFactor] = useState(1);
-  const [word, setWord] = useState("");
   const [name, setName] = useState("");
   const [difficultyLevel, setDifficultyLevel] = useState("");
+  const [difficultyFactor, setDifficultyFactor] = useState(1);
+  const [word, setWord] = useState("");
 
   useEffect(() => {
     const name = getItemFromStorage("name");
@@ -30,9 +30,32 @@ const Game = ({ history }) => {
     setName(name);
     setDifficultyLevel(difficultyLevel);
     setDifficultyFactor(DIFFICULTY_LEVEL_VALUE[difficultyLevel]);
-    const currentWord = generateWord(dictionary[difficultyLevel]);
-    setWord(currentWord);
+    getNewWord(difficultyLevel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dictionary]);
+
+  const getNewWord = (level) => {
+    const currentWord = generateWord(dictionary[level]);
+    setWord(currentWord);
+  };
+
+  const increaseDifficultyFactor = () => {
+    setDifficultyFactor(difficultyFactor + SUCCESS_INCREASE_DIFFICULTY_FACTOR);
+    if (
+      difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.easy) &&
+      difficultyFactor < (DIFFICULTY_LEVEL_VALUE.medium - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
+    )
+      setDifficultyLevel("easy");
+    else if (
+      difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.medium - SUCCESS_INCREASE_DIFFICULTY_FACTOR) &&
+      difficultyFactor < (DIFFICULTY_LEVEL_VALUE.hard - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
+    )
+      setDifficultyLevel("medium");
+    else if (
+      difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.hard - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
+    )
+      setDifficultyLevel("hard");
+  };
 
   return (
     <div className="Game height-100 d-flex flex-direction-column justify-content-between">
@@ -55,8 +78,10 @@ const Game = ({ history }) => {
         {true ? <>
           <ScoreBoard />
           <PlayingArea
-            difficultyFactor={difficultyFactor}
             currentWord={word.toUpperCase()}
+            difficultyFactor={difficultyFactor}
+            getNewWord={getNewWord}
+            increaseDifficultyFactor={increaseDifficultyFactor}
           />
           <div className="Game-center__right" />
         </> :

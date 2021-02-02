@@ -56,7 +56,7 @@ const Game = ({ history }) => {
           <ScoreBoard />
           <PlayingArea
             difficultyFactor={difficultyFactor}
-            currentWord={word}
+            currentWord={word.toUpperCase()}
           />
           <div className="Game-center__right" />
         </> :

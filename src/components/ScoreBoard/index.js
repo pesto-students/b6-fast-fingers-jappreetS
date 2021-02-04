@@ -1,20 +1,24 @@
 import React from 'react';
 
+import { convertSecondsToMMSS, getHighestScoreObj } from './../../utils/helpers';
+
 import './style.scss';
 
-const ScoreBoard = () => {
+const ScoreBoard = ({ scores }) => {
+  const highestScoreObj = getHighestScoreObj(scores);
   return (
     <div className="ScoreBoard">
       <div className="title color-red">SCORE BOARD</div>
-      <div className="score-container">
-        <div className="score color-white">Game 1 : 1:14</div>
-        <div className="score color-white">Game 2 : 1:27</div>
-        <div className="score color-white">Game 3 : 2:01</div>
-        <div className="score color-white">
-          <div className="color-red">PERSONAL BEST</div>
-          Game 4 : 2:07
+      {!!scores && scores.length &&
+        <div className="score-container">
+          {scores.map(score => (
+            <div className="score color-white">
+              {highestScoreObj.id === score.id && <div className="color-red">PERSONAL BEST</div>}
+              {score.name} : {convertSecondsToMMSS(score.score)}
+            </div>
+          ))}
         </div>
-      </div>
+      }
     </div>
   )
 };

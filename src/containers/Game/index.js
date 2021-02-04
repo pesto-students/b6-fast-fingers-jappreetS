@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { DIFFICULTY_LEVEL_VALUE, ROUTES, SUCCESS_INCREASE_DIFFICULTY_FACTOR } from './../../constants';
 import DictionaryContext from './../../context/DictionaryContext';
-import { generateWord, getItemFromStorage } from './../../utils/helpers';
+import { convertSecondsToMMSS, generateWord, getHighestScoreObj, getItemFromStorage } from './../../utils/helpers';
 
 import Button from './../../components/Button';
 import CurrentGameDetails from './../../components/CurrentGameDetails';
@@ -24,6 +24,10 @@ const Game = ({ history }) => {
   const [difficultyFactor, setDifficultyFactor] = useState(1);
   const [word, setWord] = useState("");
   const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState(null);
+  const [scoreBoard, setScoreBoard] = useState([]);
+  const [currentGameObj, setCurrentGameObj] = useState(null);
+  const [isNewHighScore, setIsNewHighScore] = useState(false);
 
   useEffect(() => {
     const name = getItemFromStorage("name");
@@ -34,6 +38,18 @@ const Game = ({ history }) => {
     getNewWord(difficultyLevel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dictionary]);
+
+  useEffect(() => {
+    const scoreInterval = setInterval(() => {
+      setScore(score + 1);
+    }, 1000);
+    if (isGameOver) {
+      clearInterval(scoreInterval);
+      setScore(null);
+    }
+    return () => clearInterval(scoreInterval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [score]);
 
   const getNewWord = (level) => {
     const currentWord = generateWord(dictionary[level]);
@@ -64,16 +80,27 @@ const Game = ({ history }) => {
 
   const onGameOver = () => {
     setIsGameOver(true);
+    const currentGameObj = {
+      id: scoreBoard.length + 1,
+      name: `GAME ${scoreBoard.length + 1}`,
+      score,
+    };
+    const updatedScoreBoard = [...scoreBoard, currentGameObj];
+    setScoreBoard(updatedScoreBoard);
+    const highestScoreObj = getHighestScoreObj(updatedScoreBoard);
+    setCurrentGameObj(currentGameObj);
+    setIsNewHighScore(!!highestScoreObj ? highestScoreObj.id === currentGameObj.id : true);
   };
 
   const onPlayAgainClick = () => {
     setIsGameOver(false);
     getNewWord(difficultyLevel);
-    // setShowScore(true);
+    setScore(0);
+    setIsNewHighScore(false);
   };
 
   return (
-    <div className="Game height-100 d-flex flex-direction-column justify-content-between">
+    <div className={"Game height-100-vh d-flex flex-direction-column justify-content-between"}>
       <section className="Game-top d-flex justify-content-between">
         <div className="Game-top__left">
           <div className="icon-text d-flex align-items-center">
@@ -85,35 +112,48 @@ const Game = ({ history }) => {
             <span className="color-red text-uppercase">LEVEL: {difficultyLevel}</span>
           </div>
         </div>
-        <div className="Game-top__right color-red">fast fingers</div>
+        <div className="Game-top__right color-red">
+          <div>fast fingers</div>
+          {isGameOver ? null : <div>SCORE: {!!score ? convertSecondsToMMSS(score) : convertSecondsToMMSS(0)}</div>}
+        </div>
       </section>
       <section
         className={`Game-center d-flex ${!isGameOver ? "justify-content-between" : "justify-content-center"}`}
       >
-        {!isGameOver ? <>
-          <ScoreBoard />
-          <PlayingArea
-            currentWord={word.toUpperCase()}
-            difficultyFactor={difficultyFactor}
-            getNewWord={getNewWord}
-            increaseDifficultyFactor={increaseDifficultyFactor}
-            onGameOver={onGameOver}
-          />
-          <div className="Game-center__right" />
-        </> :
+        {isGameOver ?
           <CurrentGameDetails
+            isNewHighScore={isNewHighScore}
+            currentGameObj={currentGameObj}
             onPlayAgainClick={onPlayAgainClick}
-          />
+          /> :
+          <>
+            <ScoreBoard scores={scoreBoard} />
+            <PlayingArea
+              currentWord={word.toUpperCase()}
+              difficultyFactor={difficultyFactor}
+              getNewWord={getNewWord}
+              increaseDifficultyFactor={increaseDifficultyFactor}
+              onGameOver={onGameOver}
+            />
+            <div className="Game-center__right" />
+          </>
         }
       </section>
       <section className="Game-bottom d-flex justify-content-between">
-        <Button
-          iconName="stop"
-          iconPath={closeIcon}
-          text="STOP GAME"
-          width="56"
-          onClick={onStopGame}
-        />
+        {isGameOver ?
+          <Button
+            text="QUIT"
+            width="56"
+            onClick={onStopGame}
+          /> :
+          <Button
+            iconName="stop"
+            iconPath={closeIcon}
+            text="STOP GAME"
+            width="56"
+            onClick={onStopGame}
+          />
+        }
         <Icon
           iconName="home"
           iconPath={homeIcon}

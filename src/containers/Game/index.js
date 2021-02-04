@@ -37,7 +37,7 @@ const Game = ({ history }) => {
     setDifficultyFactor(DIFFICULTY_LEVEL_VALUE[difficultyLevel]);
     getNewWord(difficultyLevel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dictionary]);
+  }, []);
 
   useEffect(() => {
     const scoreInterval = setInterval(() => {

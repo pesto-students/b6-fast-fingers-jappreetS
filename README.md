@@ -1,4 +1,5 @@
-# Application URL: https://fast-fingers-jappreet.netlify.app/
+# Application URL:
+https://fast-fingers-jappreet.netlify.app/
 
 # Fast Fingers
 

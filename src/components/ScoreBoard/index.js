@@ -11,10 +11,10 @@ const ScoreBoard = ({ scores }) => {
       <div className="title color-red">SCORE BOARD</div>
       {!!scores && scores.length &&
         <div className="score-container">
-          {scores.map(score => (
+          {scores.map(({ id, name: gameName, score }) => (
             <div className="score color-white">
-              {highestScoreObj.id === score.id && <div className="color-red">PERSONAL BEST</div>}
-              {score.name} : {convertSecondsToMMSS(score.score)}
+              {highestScoreObj.id === id && <div className="color-red">PERSONAL BEST</div>}
+              {gameName} : {convertSecondsToMMSS(score)}
             </div>
           ))}
         </div>

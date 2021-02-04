@@ -6,7 +6,7 @@ import reloadIcon from './../../assets/images/icons/reload.svg';
 
 import './style.scss';
 
-const CurrentGameDetails = () => {
+const CurrentGameDetails = ({ onPlayAgainClick }) => {
   return (
     <div className="CurrentGameDetails color-white text-align-center">
       <div className="title">SCORE: GAME 5</div>
@@ -18,6 +18,7 @@ const CurrentGameDetails = () => {
         text="PLAY AGAIN"
         showIconMargin
         width="40"
+        onClick={onPlayAgainClick}
       />
     </div>
   )

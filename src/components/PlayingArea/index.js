@@ -5,7 +5,7 @@ import TextInput from './../../elements/TextInput';
 
 import './style.scss';
 
-const PlayingArea = ({ currentWord, difficultyFactor, getNewWord, increaseDifficultyFactor }) => {
+const PlayingArea = ({ currentWord, difficultyFactor, getNewWord, increaseDifficultyFactor, onGameOver }) => {
   const [userInput, setUserInput] = useState("");
   const [currentWordTime, setCurrentWordTime] = useState(0);
 
@@ -59,6 +59,7 @@ const PlayingArea = ({ currentWord, difficultyFactor, getNewWord, increaseDiffic
       <Counter
         timeForWord={currentWordTime}
         word={currentWord}
+        onGameOver={onGameOver}
       />
       {getCurrentWord()}
       <TextInput

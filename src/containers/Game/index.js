@@ -23,6 +23,7 @@ const Game = ({ history }) => {
   const [difficultyLevel, setDifficultyLevel] = useState("");
   const [difficultyFactor, setDifficultyFactor] = useState(1);
   const [word, setWord] = useState("");
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     const name = getItemFromStorage("name");
@@ -57,6 +58,20 @@ const Game = ({ history }) => {
       setDifficultyLevel("hard");
   };
 
+  const onStopGame = () => {
+    history.push(ROUTES.HOME);
+  };
+
+  const onGameOver = () => {
+    setIsGameOver(true);
+  };
+
+  const onPlayAgainClick = () => {
+    setIsGameOver(false);
+    getNewWord(difficultyLevel);
+    // setShowScore(true);
+  };
+
   return (
     <div className="Game height-100 d-flex flex-direction-column justify-content-between">
       <section className="Game-top d-flex justify-content-between">
@@ -73,19 +88,22 @@ const Game = ({ history }) => {
         <div className="Game-top__right color-red">fast fingers</div>
       </section>
       <section
-        className={`Game-center d-flex ${true ? "justify-content-between" : "justify-content-center"}`}
+        className={`Game-center d-flex ${!isGameOver ? "justify-content-between" : "justify-content-center"}`}
       >
-        {true ? <>
+        {!isGameOver ? <>
           <ScoreBoard />
           <PlayingArea
             currentWord={word.toUpperCase()}
             difficultyFactor={difficultyFactor}
             getNewWord={getNewWord}
             increaseDifficultyFactor={increaseDifficultyFactor}
+            onGameOver={onGameOver}
           />
           <div className="Game-center__right" />
         </> :
-          <CurrentGameDetails />
+          <CurrentGameDetails
+            onPlayAgainClick={onPlayAgainClick}
+          />
         }
       </section>
       <section className="Game-bottom d-flex justify-content-between">
@@ -94,6 +112,7 @@ const Game = ({ history }) => {
           iconPath={closeIcon}
           text="STOP GAME"
           width="56"
+          onClick={onStopGame}
         />
         <Icon
           iconName="home"

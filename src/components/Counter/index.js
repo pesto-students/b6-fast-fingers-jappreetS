@@ -13,7 +13,6 @@ const Counter = ({ timeForWord, word, onGameOver }) => {
   }, [timeForWord]);
 
   useEffect(() => {
-    // if (!timeLeft) return;
     const intervalId = setInterval(() => {
       if (!timeLeft) {
         onGameOver();

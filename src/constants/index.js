@@ -9,6 +9,12 @@ const DIFFICULTY_LEVEL = [
   { value: 'hard', label: 'HARD' },
 ];
 
+const DIFFICULTY_LEVEL_STRINGS = {
+  easy: 'easy',
+  medium: 'medium',
+  hard: 'hard',
+};
+
 const DIFFICULTY_LEVEL_VALUE = {
   easy: 1,
   medium: 1.5,
@@ -25,6 +31,7 @@ const SUCCESS_INCREASE_DIFFICULTY_FACTOR = 0.01;
 export {
   COLOR_CODES,
   DIFFICULTY_LEVEL,
+  DIFFICULTY_LEVEL_STRINGS,
   DIFFICULTY_LEVEL_VALUE,
   ROUTES,
   SUCCESS_INCREASE_DIFFICULTY_FACTOR,

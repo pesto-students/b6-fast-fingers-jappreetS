@@ -1,8 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { DIFFICULTY_LEVEL_VALUE, ROUTES, SUCCESS_INCREASE_DIFFICULTY_FACTOR } from './../../constants';
+import {
+  DIFFICULTY_LEVEL_STRINGS,
+  DIFFICULTY_LEVEL_VALUE,
+  ROUTES,
+  SUCCESS_INCREASE_DIFFICULTY_FACTOR,
+} from './../../constants';
 import DictionaryContext from './../../context/DictionaryContext';
-import { convertSecondsToMMSS, generateWord, getHighestScoreObj, getItemFromStorage } from './../../utils/helpers';
+import {
+  convertSecondsToMMSS,
+  generateWord,
+  getHighestScoreObj,
+  getItemFromStorage,
+} from './../../utils/helpers';
 
 import Button from './../../components/Button';
 import CurrentGameDetails from './../../components/CurrentGameDetails';
@@ -62,16 +72,16 @@ const Game = ({ history }) => {
       difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.easy) &&
       difficultyFactor < (DIFFICULTY_LEVEL_VALUE.medium - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
     )
-      setDifficultyLevel("easy");
+      setDifficultyLevel(DIFFICULTY_LEVEL_STRINGS.easy);
     else if (
       difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.medium - SUCCESS_INCREASE_DIFFICULTY_FACTOR) &&
       difficultyFactor < (DIFFICULTY_LEVEL_VALUE.hard - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
     )
-      setDifficultyLevel("medium");
+      setDifficultyLevel(DIFFICULTY_LEVEL_STRINGS.medium);
     else if (
       difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.hard - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
     )
-      setDifficultyLevel("hard");
+      setDifficultyLevel(DIFFICULTY_LEVEL_STRINGS.hard);
   };
 
   const onStopGame = () => {

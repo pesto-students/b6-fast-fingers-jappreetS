@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { COLOR_CODES } from './../../constants';
+import { COLOR_CODES, DIFFICULTY_LEVEL_STRINGS } from './../../constants';
 
 import Counter from './../Counter';
 import TextInput from './../../elements/TextInput';
@@ -21,11 +21,11 @@ const PlayingArea = ({ currentWord, difficultyFactor, getNewWord, increaseDiffic
       increaseDifficultyFactor();
       let currentLevel;
       if (difficultyFactor >= 1 && difficultyFactor < 1.5) {
-        currentLevel = "easy";
+        currentLevel = DIFFICULTY_LEVEL_STRINGS.easy;
       } else if (difficultyFactor >= 1.5 && difficultyFactor < 2) {
-        currentLevel = "medium";
+        currentLevel = DIFFICULTY_LEVEL_STRINGS.medium;
       } else {
-        currentLevel = "hard";
+        currentLevel = DIFFICULTY_LEVEL_STRINGS.hard;
       }
       getNewWord(currentLevel);
       setUserInput("");

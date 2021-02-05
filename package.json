@@ -13,8 +13,9 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
+    "prestart": "node processDictionary.js",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node processDictionary.js && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   DIFFICULTY_LEVEL_STRINGS,
@@ -6,7 +6,6 @@ import {
   ROUTES,
   SUCCESS_INCREASE_DIFFICULTY_FACTOR,
 } from './../../constants';
-import DictionaryContext from './../../context/DictionaryContext';
 import {
   convertSecondsToMMSS,
   generateWord,
@@ -28,7 +27,6 @@ import userIcon from './../../assets/images/icons/user.svg';
 import './style.scss';
 
 const Game = ({ history }) => {
-  const dictionary = useContext(DictionaryContext);
   const [name, setName] = useState("");
   const [difficultyLevel, setDifficultyLevel] = useState("");
   const [difficultyFactor, setDifficultyFactor] = useState(1);
@@ -62,7 +60,7 @@ const Game = ({ history }) => {
   }, [score]);
 
   const getNewWord = (level) => {
-    const currentWord = generateWord(dictionary[level]);
+    const currentWord = generateWord(import(`./../../data/${level}.json`));
     setWord(currentWord);
   };
 

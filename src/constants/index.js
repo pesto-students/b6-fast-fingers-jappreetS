@@ -1,3 +1,8 @@
+const COLOR_CODES = {
+  GREEN: '#54BA18',
+  PURPLE: '#445298',
+};
+
 const DIFFICULTY_LEVEL = [
   { value: 'easy', label: 'EASY' },
   { value: 'medium', label: 'MEDIUM' },
@@ -18,6 +23,7 @@ const ROUTES = {
 const SUCCESS_INCREASE_DIFFICULTY_FACTOR = 0.01;
 
 export {
+  COLOR_CODES,
   DIFFICULTY_LEVEL,
   DIFFICULTY_LEVEL_VALUE,
   ROUTES,

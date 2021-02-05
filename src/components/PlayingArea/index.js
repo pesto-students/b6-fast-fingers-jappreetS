@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { COLOR_CODES } from './../../constants';
+
 import Counter from './../Counter';
 import TextInput from './../../elements/TextInput';
 
@@ -39,7 +41,7 @@ const PlayingArea = ({ currentWord, difficultyFactor, getNewWord, increaseDiffic
         {currentWordCharacters.map((char, index) => {
           let charColor;
           if (index < userInput.length) {
-            charColor = char === userInputCharacters[index] ? "#54BA18" : "#445298";
+            charColor = char === userInputCharacters[index] ? COLOR_CODES.GREEN : COLOR_CODES.PURPLE;
           }
           return (
             <span key={index} style={{ color: charColor }}>{char}</span>

@@ -1,16 +1,21 @@
-// storageType, 0 = "Session Storage", 1 = "Local Storage"
-const setItemInStorage = (key, value, storageType = 0) => {
-  if (!!storageType) {
+import { STORAGE_TYPES, STORAGE_TYPE_VALUES } from "./../constants";
+
+// storageType, "session_storage" = "Session Storage", "local_storage" = "Local Storage"
+const setItemInStorage = (key, value, storageType = STORAGE_TYPES.SESSION_STORAGE) => {
+  if (!!STORAGE_TYPE_VALUES[storageType]) {
     localStorage.setItem(key, value);
-  } sessionStorage.setItem(key, value);
+  } else {
+    sessionStorage.setItem(key, value);
+  }
 };
 
-const getItemFromStorage = (key, storageType = 0) => {
+const getItemFromStorage = (key, storageType = STORAGE_TYPES.SESSION_STORAGE) => {
   let data;
-  if (!!storageType) {
+  if (!!STORAGE_TYPE_VALUES[storageType]) {
     data = localStorage.getItem(key);
+  } else {
+    data = sessionStorage.getItem(key);
   }
-  data = sessionStorage.getItem(key);
   return data;
 };
 

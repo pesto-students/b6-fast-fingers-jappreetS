@@ -26,6 +26,12 @@ import userIcon from './../../assets/images/icons/user.svg';
 
 import './style.scss';
 
+const dictionary = {
+  easy: require('./../../data/easy.json'),
+  medium: require('./../../data/medium.json'),
+  hard: require('./../../data/hard.json'),
+};
+
 const Game = ({ history }) => {
   const [name, setName] = useState("");
   const [difficultyLevel, setDifficultyLevel] = useState("");
@@ -59,8 +65,8 @@ const Game = ({ history }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score]);
 
-  const getNewWord = (level) => {
-    const currentWord = generateWord(import(`./../../data/${level}.json`));
+  const getNewWord = level => {
+    const currentWord = generateWord(dictionary[level]);
     setWord(currentWord);
   };
 

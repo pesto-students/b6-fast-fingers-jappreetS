@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  DIFFICULTY_LEVEL_STRINGS,
   DIFFICULTY_LEVEL_VALUE,
   ROUTES,
   SUCCESS_INCREASE_DIFFICULTY_FACTOR,
@@ -33,25 +32,15 @@ const dictionary = {
 };
 
 const Game = ({ history }) => {
-  const [name, setName] = useState("");
-  const [difficultyLevel, setDifficultyLevel] = useState("");
-  const [difficultyFactor, setDifficultyFactor] = useState(1);
-  const [word, setWord] = useState("");
+  const name = getItemFromStorage("name");
+  const difficultyLevel = getItemFromStorage("difficultyLevel");
+  const [difficultyFactor, setDifficultyFactor] = useState(DIFFICULTY_LEVEL_VALUE[difficultyLevel]);
+  const [word, setWord] = useState(generateWord(dictionary[difficultyLevel]));
   const [isGameOver, setIsGameOver] = useState(false);
   const [score, setScore] = useState(null);
   const [scoreBoard, setScoreBoard] = useState([]);
   const [currentGameObj, setCurrentGameObj] = useState(null);
   const [isNewHighScore, setIsNewHighScore] = useState(false);
-
-  useEffect(() => {
-    const name = getItemFromStorage("name");
-    const difficultyLevel = getItemFromStorage("difficultyLevel");
-    setName(name);
-    setDifficultyLevel(difficultyLevel);
-    setDifficultyFactor(DIFFICULTY_LEVEL_VALUE[difficultyLevel]);
-    getNewWord(difficultyLevel);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const scoreInterval = setInterval(() => {
@@ -72,20 +61,6 @@ const Game = ({ history }) => {
 
   const increaseDifficultyFactor = () => {
     setDifficultyFactor(difficultyFactor + SUCCESS_INCREASE_DIFFICULTY_FACTOR);
-    if (
-      difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.easy) &&
-      difficultyFactor < (DIFFICULTY_LEVEL_VALUE.medium - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
-    )
-      setDifficultyLevel(DIFFICULTY_LEVEL_STRINGS.easy);
-    else if (
-      difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.medium - SUCCESS_INCREASE_DIFFICULTY_FACTOR) &&
-      difficultyFactor < (DIFFICULTY_LEVEL_VALUE.hard - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
-    )
-      setDifficultyLevel(DIFFICULTY_LEVEL_STRINGS.medium);
-    else if (
-      difficultyFactor >= (DIFFICULTY_LEVEL_VALUE.hard - SUCCESS_INCREASE_DIFFICULTY_FACTOR)
-    )
-      setDifficultyLevel(DIFFICULTY_LEVEL_STRINGS.hard);
   };
 
   const onStopGame = () => {

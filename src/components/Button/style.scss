@@ -17,3 +17,13 @@ $root: '.Button';
     margin-right: 16px;
   }
 }
+
+@media only screen and (max-width: 767px) {
+  #{$root} {
+    font-size: 32px;
+
+    .show-icon-margin {
+      margin-right: 12px;
+    }
+  }
+}

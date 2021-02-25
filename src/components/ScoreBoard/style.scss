@@ -1,7 +1,7 @@
 $root: '.ScoreBoard';
 
 #{$root} {
-  border: 3px solid #FF5155;
+  border: 3px solid #ff5155;
   border-radius: 15px;
   padding: 32px;
   width: 320px;
@@ -22,5 +22,11 @@ $root: '.ScoreBoard';
         margin-bottom: 6px;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  #{$root} {
+    display: none;
   }
 }

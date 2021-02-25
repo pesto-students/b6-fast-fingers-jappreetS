@@ -3,7 +3,7 @@ $root: '.CurrentGameDetails';
 #{$root} {
   .title {
     font-size: 56px;
-    margin-bottom: 32;
+    margin-bottom: 32px;
   }
   .score {
     font-size: 80px;
@@ -15,5 +15,39 @@ $root: '.CurrentGameDetails';
   }
   .Button {
     margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  #{$root} {
+    .title {
+      font-size: 40px;
+      margin-bottom: 24px;
+    }
+    .score {
+      font-size: 64px;
+      margin-bottom: 14px;
+    }
+    .high-score {
+      font-size: 32px;
+      margin-bottom: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  #{$root} {
+    .title {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .score {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    .high-score {
+      font-size: 24px;
+      margin-bottom: 32px;
+    }
   }
 }
